@@ -1,4 +1,9 @@
 
+# Function Summary --------------------------------------------------------------------------------------
+
+# NOTE: I've linked directly to the documentation for most of these functions right in the schedule item for
+#       today, with individualized, separate links. (See the "Resources" item.) 
+# 
 # USEFUL LOGICAL OPERATORS:
 # is.na()             <-- checks for missing/NA
 # str_detect()        <-- checks for string match (incl. regex)
@@ -25,6 +30,8 @@
 # str_extract()       <-- extracts a matching substring from string (incl. regex)
 # str_replace()       <-- replaces a matching substring with a replacement (incl. regex)
 
+
+# Sample Code -------------------------------------------------------------------------------------------
 
 df <- read_csv('https://bit.ly/ugly_fruit_555', col_types = 'ccccccc')
 
