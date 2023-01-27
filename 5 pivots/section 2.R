@@ -9,10 +9,10 @@
 # 
 # pivot_longer(
 #   data,                             <-- The incoming tibble, usually comes in via a pipe
-#   cols,                             <-- This is where you say which columns you're pulling down to long format
+#   *cols,                             <-- This is where you say which columns you're pulling down to long format
 #                                           (any that you don't name here are assumed to be "id columns" that 
 #                                           will repeat with eachof the variables being converted to long format)
-#   names_to = "name",                <-- This is the column name that will "house" the column names that you have 
+#   *names_to = "name",                <-- This is the column name that will "house" the column names that you have 
 #                                           specified in the `cols` parameter. Often you can just leave this as the 
 #                                           default and it will name it "name", but you can also be more descriptive
 #   names_prefix = NULL,              <-- You can (optionally) indicate a text-based prefix to auto-remove as the
@@ -23,7 +23,7 @@
 #   names_ptypes = NULL,              <-- beyond our scope - explore this on your own if you want.
 #   names_transform = NULL,           <-- beyond our scope - explore this on your own if you want.
 #   names_repair = "check_unique",    <-- beyond our scope - explore this on your own if you want.
-#   values_to = "value",              <-- this is the column that will "house" the values corresponding to each of 
+#   *values_to = "value",              <-- this is the column that will "house" the values corresponding to each of 
 #                                           the column name labels in the `names_to` column that you specified above.
 #   values_drop_na = FALSE,           <-- wider data is often "sparse", meaning that it has lots of nulls when not all
 #                                           rows have a value for each wide column. It's usually efficient to filter 
@@ -71,19 +71,68 @@ drinks <- tribble(
 )
 
 # Let's make it more tidy. pivot_longer
+drinks %>% 
+  pivot_longer(
+    cols = soda:sparkling_water,
+    names_to = 'drink_type',
+    values_to = 'liters_per_capita',
+  )
+
+
+
 
 
 # New data:
 gap <- read_csv('https://www.dropbox.com/s/dv1a1ldkuyoftn2/gap_smaller.csv?dl=1')
 
 # Start with just country, year, lifeExp, pivot wider
+gap %>% 
+  select(country, year, lifeExp) %>% 
+  pivot_wider(
+    names_from = year,
+    values_from = lifeExp
+  )
+
+gap %>% 
+  select(country, year, lifeExp) %>% 
+  pivot_wider(
+    names_from = country,
+    values_from = lifeExp
+  )
+
 
 
 # Now let's go the other way: pivot all three measures longer
+gap %>% 
+  pivot_longer(
+    cols = c(lifeExp, pop, gdpPercap),
+    names_to = 'measure',
+    values_to = 'value'
+  )
+
+gap %>% 
+  pivot_longer(
+    cols = c(lifeExp, pop, gdpPercap),
+    names_to = 'measure',
+    values_to = 'value'
+  )
+
 
 
 # Pivot all three measures wider. Gets messy, but 
 # sometimes data comes to you in this format
+gap_wide <- gap %>% 
+  pivot_wider(
+    names_from = year,
+    values_from = c(lifeExp, pop, gdpPercap)
+  )
+
+gap_wide %>% 
+  pivot_longer(
+    cols = lifeExp_1952:gdpPercap_2007,
+    names_to = c('measure','year'),
+    names_sep = '_'
+  )
 
 
 
@@ -93,7 +142,18 @@ bnames <- read_csv('https://www.dropbox.com/s/6bck5fy4aag76kw/baby_names.csv?dl=
 bob <- read_csv('https://www.dropbox.com/s/mozqpceit51hia7/bob_ross.csv?dl=1')
 
 # see if you can pivot the religious income data into a tidier format
-ri
+# show only the top income BRACKET for each religion
+ri %>% 
+  pivot_longer(
+    cols = !religion,
+    names_to = 'income_bracket',
+    values_to = 'household_count'
+  ) %>% 
+  filter(income_bracket == '>150k')
+
+
+
+
 
 # see if you can widen the baby names into a format with one row per name (and sex)
 bnames

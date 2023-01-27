@@ -117,6 +117,8 @@ gap_wide <- gap %>%
   )
 
 
+# We can use some spiffy parameters to convert data like that back to long format, though you
+# don't really need to know this for anything we'll do in class.
 gap_wide %>% 
   pivot_longer(
     cols = lifeExp_1952:gdpPercap_2007,
@@ -133,12 +135,20 @@ bob <- read_csv('https://www.dropbox.com/s/mozqpceit51hia7/bob_ross.csv?dl=1')
 
 # see if you can pivot the religious income data into a tidier format
 # show only the top income BRACKET for each religion
+
+# IMPORTANT: Notice how EASY it is to find the top income for each religion because
+# of the tidying of the data we've done. It's a simple filter, rather than a 
+# group_by(), which is what we used to have to do when the data was wider.
 ri %>% 
   pivot_longer(
     cols = !religion,
     names_to = 'income_bracket'
   ) %>% 
   filter(income_bracket == '>150k')
+
+
+
+# Didn't make it to the stuff below ---------------------------------------------------------------------
 
 # see if you can widen the baby names into a format with one row per name (and sex)
 bnames
