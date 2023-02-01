@@ -124,11 +124,37 @@ bnames <- read_csv('https://www.dropbox.com/s/6bck5fy4aag76kw/baby_names.csv?dl=
 bob <- read_csv('https://www.dropbox.com/s/mozqpceit51hia7/bob_ross.csv?dl=1')
 
 # see if you can pivot the religious income data into a tidier format
+# show only the top income BRACKET (>150k) for each religion
 ri %>% 
-  pivot_longer(cols = !religion)
-
+  pivot_longer(cols = !religion,
+               names_to = 'income_bracket',
+               values_to = 'household_count') %>% 
+  filter(income_bracket == ">150k")
+  
+ri %>% select(`<$10k`:`Don't know/refused`)
 # see if you can widen the baby names into a format with one row per name (and sex)
 bnames
 
-# make the bob ross data tidier
-bob
+# make the bob ross data tidier, then:
+# episodes that depict some sort of "frame"
+# next, show the episodes that depict some sort of "frame" but not any bridges
+# count the episodes with paintings that contain "MOUNTAIN" that depict objects containing the string "tree" 
+this <- bob %>% 
+  pivot_longer(apple_frame:wood_framed,
+               names_to = 'item',
+               values_to = 'is_present') %>% 
+  filter(
+    (str_detect(item, 'frame') & is_present == 1) |
+      (item == 'bridge' & is_present == 0)) %>% 
+  distinct(episode)
+  
+bob %>% distinct(episode) %>% 
+  filter(!episode %in% this$episode)
+
+bob %>% filter(episode == 'S03E06') %>% 
+  select(contains('frame'), bridge) %>% 
+  glimpse
+
+bob %>% 
+  select(episode, contains('frame'), bridge)
+  

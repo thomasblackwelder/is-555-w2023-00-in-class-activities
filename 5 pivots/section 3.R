@@ -141,7 +141,38 @@ ri %>%
   filter(income_bracket == '>150k')
 
 # see if you can widen the baby names into a format with one row per name (and sex)
-bnames
+bnames %>% 
+  pivot_wider(
+    names_from = c(sex,name),
+    values_from = n
+  ) %>% select(year, contains('Jessica'))
+bnames %>% 
+  arrange(name, year, sex) 
 
-# make the bob ross data tidier
-bob
+bnames %>% 
+  select(-sex) %>% 
+  pivot_wider(
+    names_from = name,
+    values_from = n
+  )
+
+bnames %>% count(name)
+
+# make the bob ross data tidier, then:
+# episodes that depict some sort of "frame"
+# episodes that depict some sort of "frame" but not any bridges
+# count the episodes with paintings that contain "MOUNTAIN" that depict objects containing the string "tree" 
+bob %>% 
+  pivot_longer(
+    cols = !c(episode, season, episode_num, title),
+    names_to = 'painted_object',
+    values_to = 'is_present'
+  ) %>% 
+  # filter(is_present == 1) %>% 
+  filter(str_detect(painted_object, 'frame'), 
+         is_present == 1) %>% 
+  distinct(title)
+
+bob %>% select(episode, contains('frame'))
+
+
