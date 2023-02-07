@@ -102,3 +102,17 @@ penguins %>%
 
 
 
+# Facets and multi-lines --------------------------------------------------------------------------------
+
+tips <- read_csv('https://www.dropbox.com/s/rydxlxdarjdoj7a/tips.csv?dl=1')
+
+# Let's plot tip_percentage vs. total_bill,
+# then split that across lots of categories
+
+
+
+econ <- read_csv('https://www.dropbox.com/s/8bq9rw0rk46hru2/econ.csv?dl=1')
+
+# Let's plot two measures over time: savings rate & unemployment weeks
+# It's easiest if we pivot to make this work
+

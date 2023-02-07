@@ -81,7 +81,6 @@ penguins %>%
   ggplot(aes(x = island, y = body_mass_g, fill = species)) +
   geom_violin()
 
-
 # Bar plots with both x and  y are a bit more flexible.
 # stat summary will give us means
 
@@ -89,9 +88,6 @@ penguins %>%
 # Numeric + numeric
 
 # The classic scatter
-# Important: attributes vs aesthetics. Inheritance
-
-
 # can do bill depth vs length if we want
 
 
@@ -101,6 +97,23 @@ penguins %>%
 
 
 # versus: mapping the color specific to the scatter points only
+
+
+
+
+# Facets and multi-lines --------------------------------------------------------------------------------
+
+tips <- read_csv('https://www.dropbox.com/s/rydxlxdarjdoj7a/tips.csv?dl=1')
+
+# Let's plot tip_percentage vs. total_bill,
+# then split that across lots of categories
+
+
+
+econ <- read_csv('https://www.dropbox.com/s/8bq9rw0rk46hru2/econ.csv?dl=1')
+
+# Let's plot two measures over time: savings rate & unemployment weeks
+# It's easiest if we pivot to make this work
 
 
 
