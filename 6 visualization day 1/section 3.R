@@ -124,7 +124,9 @@ tips <- read_csv('https://www.dropbox.com/s/rydxlxdarjdoj7a/tips.csv?dl=1')
 
 # Let's plot tip_percentage vs. total_bill,
 # then split that across lots of categories
-
+tips %>% 
+  mutate(bad_smoker_tip = ifelse(smoker == 'Yes', tip*100, tip)) %>% 
+  mutate(bad_day_total = ifelse(day %in% c('Sun', 'Sat'), total_bill*1000, total_bill))
 
 
 econ <- read_csv('https://www.dropbox.com/s/8bq9rw0rk46hru2/econ.csv?dl=1')
