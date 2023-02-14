@@ -169,7 +169,7 @@ econ %>%
                names_to = 'Measure',
                values_to = 'Rate') %>% 
   ggplot(aes(x = date, y = Rate, color = Measure)) +
-  geom_line(size = 1.5)# +
-  # facet_wrap(~Measure, nrow = 2, scales = 'free_y')
+  geom_line(size = 1.5) +
+  facet_wrap(~Measure, nrow = 2, scales = 'free_y')
 
 
